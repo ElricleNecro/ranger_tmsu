@@ -1,5 +1,6 @@
 from ranger.api import register_linemode
 from ranger.core.linemode import LinemodeBase
+from ranger.ext.human_readable import human_readable
 from .tmsu import tmsu_tag, tmsu_untag, tmsu_ls
 from .tmsu_utils import Tmsu
 
@@ -13,7 +14,19 @@ class TmsuLinemode(LinemodeBase):
     uses_metadata = False
 
     def filetitle(self, file, metadata):
-        return file.relative_path + str(tmsu.tags(file))
+        return file.relative_path
 
     def infostring(self, file, metadata):
-        return file.user
+        if file.stat is None:
+            return "?"
+        if file.is_directory and not file.cumulative_size_calculated:
+            if file.size is None:
+                sizestring = ""
+                tagstring = ""
+            else:
+                sizestring = file.size
+                tagstring = ""
+        else:
+            sizestring = human_readable(file.size)
+            tagstring = str(tmsu.tags(file))
+        return "%s %s" % (sizestring, tagstring)
