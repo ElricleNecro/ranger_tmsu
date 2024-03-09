@@ -1,6 +1,5 @@
-from ranger.api.commands import Command
 import os
-
+from ranger.api.commands import Command
 from .tmsu_utils import Tmsu
 
 tmsu = Tmsu.findTmsu()

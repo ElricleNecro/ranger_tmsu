@@ -1,6 +1,9 @@
 from ranger.api import register_linemode
 from ranger.core.linemode import LinemodeBase
 from .tmsu import tmsu_tag, tmsu_untag, tmsu_ls
+from .tmsu_utils import Tmsu
+
+tmsu = Tmsu.findTmsu()
 
 
 @register_linemode  # It may be used as a decorator too!
