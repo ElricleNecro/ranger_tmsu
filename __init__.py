@@ -22,11 +22,10 @@ class TmsuLinemode(LinemodeBase):
         if file.is_directory and not file.cumulative_size_calculated:
             if file.size is None:
                 sizestring = ""
-                tagstring = ""
             else:
                 sizestring = file.size
-                tagstring = ""
         else:
             sizestring = human_readable(file.size)
-            tagstring = str(tmsu.tags(file))
+
+        tagstring = str(tmsu.tags(file.basename))
         return "%s %s" % (sizestring, tagstring)
